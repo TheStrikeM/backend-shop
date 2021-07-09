@@ -32,4 +32,8 @@ export default class UserRepository {
 
         return toUserDto(user)
     }
+
+    async findByPayload({ username }: any): Promise<DefaultUserDto> {
+        return await this.findOne({where:  { username } });
+    }
 }
