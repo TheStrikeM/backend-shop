@@ -3,6 +3,11 @@ import UserModule from "../user/user.module";
 import CryptoModule from "../crypto/crypto.module";
 import {JwtModule} from "@nestjs/jwt";
 import {PassportModule} from "@nestjs/passport";
+import JwtStrategy from "./strategys/jwt.strategy";
+import AuthController from "./auth.controller";
+import JwtGuard from "./guard/jwt.guard";
+import LocalGuard from "./guard/local.guard";
+import AuthService from "./auth.service";
 
 @Module({
     imports: [
@@ -19,7 +24,7 @@ import {PassportModule} from "@nestjs/passport";
             session: false,
         }),
     ],
-    providers: [],
+    providers: [JwtStrategy, AuthService, AuthController, JwtGuard, LocalGuard],
     exports: []
 })
 export default class AuthModule {}

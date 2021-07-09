@@ -3,6 +3,8 @@ import { ThrottlerModule } from "@nestjs/throttler";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import {ConfigModule} from "@nestjs/config";
 import TypeOrmConfig from "./typeorm.config";
+import AuthModule from "./modules/auth/auth.module";
+import UserModule from "./modules/user/user.module";
 
 @Module({
     imports: [
@@ -17,6 +19,8 @@ import TypeOrmConfig from "./typeorm.config";
         TypeOrmModule.forRootAsync({
             useClass: TypeOrmConfig
         }),
+        AuthModule,
+        UserModule
     ],
     exports: [],
     providers: [TypeOrmConfig]
