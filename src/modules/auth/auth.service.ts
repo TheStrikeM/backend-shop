@@ -2,10 +2,11 @@ import {Injectable} from "@nestjs/common";
 import UserRepository from "../user/repositories/user.repository";
 import JwtStrategy from "./strategys/jwt.strategy";
 import RegistrationUserDto from "../user/dto/RegistrationUserDto";
-import RegistrationStatus from "./interfaces/registration-status.interface";
+import RegistrationStatus, {LoginStatus, TokenStatus} from "./interfaces/statuses.interface";
 import DefaultUserDto from "../user/dto/DefaultUserDto";
 import {JwtPayload} from "./interfaces/jwtpayload.interface";
 import {JwtService} from "@nestjs/jwt";
+import LoginUserDto from "../user/dto/LoginUserDto";
 
 @Injectable()
 export default class AuthService {
@@ -14,7 +15,7 @@ export default class AuthService {
         private readonly jwtService: JwtService
     ) {}
 
-    private _createToken({ username }: DefaultUserDto): any {
+    private _createToken({ username }: DefaultUserDto): TokenStatus {
         const user: JwtPayload = { username }
         const accessToken = this.jwtService.sign(user)
         return {
@@ -40,5 +41,25 @@ export default class AuthService {
         return status
     }
 
-    async
+    async login(dto: LoginUserDto): Promise<LoginStatus> {
+        let status: LoginStatus = {
+            success: true,
+            message: 'The user has successfully logged in'
+        }
+        try {
+            const user = await this.userRepository.findByLogin(dto);
+            const token = this._createToken(user);
+            status.info = {
+                user,
+                token
+            }
+        } catch (err) {
+            status = {
+                success: false,
+                message: err
+            }
+        }
+
+        return status
+    }
 }
