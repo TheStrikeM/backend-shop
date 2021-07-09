@@ -1,8 +1,7 @@
 import {HttpException, HttpStatus, Injectable} from "@nestjs/common";
 import UserRepository from "../user/repositories/user.repository";
-import JwtStrategy from "./strategys/jwt.strategy";
 import RegistrationUserDto from "../user/dto/RegistrationUserDto";
-import RegistrationStatus, {LoginStatus, TokenStatus} from "./interfaces/statuses.interface";
+import {LoginStatus, TokenStatus, RegistrationStatus} from "./interfaces/statuses.interface";
 import DefaultUserDto from "../user/dto/DefaultUserDto";
 import {JwtPayload} from "./interfaces/jwtpayload.interface";
 import {JwtService} from "@nestjs/jwt";
