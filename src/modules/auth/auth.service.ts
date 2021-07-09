@@ -1,4 +1,4 @@
-import {Injectable} from "@nestjs/common";
+import {HttpException, HttpStatus, Injectable} from "@nestjs/common";
 import UserRepository from "../user/repositories/user.repository";
 import JwtStrategy from "./strategys/jwt.strategy";
 import RegistrationUserDto from "../user/dto/RegistrationUserDto";
@@ -22,6 +22,12 @@ export default class AuthService {
             expiresIn: process.env.JWT_EXPIRESIN,
             accessToken,
         }
+    }
+
+    async validateUser(payload: JwtPayload): Promise<DefaultUserDto> {
+        const user = await this.userRepository.findByPayload(payload)
+        if (!user) throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED)
+        return user
     }
 
     async register(dto: RegistrationUserDto): Promise<RegistrationStatus> {
