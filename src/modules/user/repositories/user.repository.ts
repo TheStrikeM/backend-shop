@@ -11,11 +11,13 @@ export default class UserRepository {
         @InjectRepository(UserEntity) private usersRepository: Repository<UserEntity>,
     ) {}
 
-    findById(id: string): Promise<UserEntity> {
+    findById(options?: object): Promise<UserEntity> {
         return this.usersRepository.findOne(id)
     }
 
     async remove(id: string): Promise<void> {
         await this.usersRepository.delete(id)
     }
+
+
 }
