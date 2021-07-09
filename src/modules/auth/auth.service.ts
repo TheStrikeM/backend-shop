@@ -16,7 +16,11 @@ export default class AuthService {
 
     private _createToken({ username }: DefaultUserDto): any {
         const user: JwtPayload = { username }
-        const accessToken = this
+        const accessToken = this.jwtService.sign(user)
+        return {
+            expiresIn: process.env.JWT_EXPIRESIN,
+            accessToken,
+        }
     }
 
     async register(dto: RegistrationUserDto): Promise<RegistrationStatus> {
@@ -35,4 +39,6 @@ export default class AuthService {
         }
         return status
     }
+
+    async
 }
