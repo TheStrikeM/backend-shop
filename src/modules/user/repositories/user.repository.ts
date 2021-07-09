@@ -26,5 +26,10 @@ export default class UserRepository {
         if (!user) throw new HttpException('User not found', HttpStatus.UNAUTHORIZED)
 
         const isValidPassword = await this.cryptoService.comparePassword(password, user.password)
+        if (!isValidPassword) {
+            throw new HttpException('Password is incorrect', HttpStatus.UNAUTHORIZED)
+        }
+
+        return toUserDto(user)
     }
 }
