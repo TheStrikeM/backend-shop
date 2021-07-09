@@ -26,8 +26,8 @@ export default class CryptoService {
         return decryptedText;
     }
 
-    comparePassword(password1: string, password2: string) {
-        if (this.decrypt(password1) === this.decrypt(password2)) return true
+    comparePassword(decryptedPassword: string, encryptedPassword: string) {
+        if (decryptedPassword === this.decrypt(encryptedPassword)) return true
         else return false
     }
 }

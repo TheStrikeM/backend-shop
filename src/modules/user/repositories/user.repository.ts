@@ -25,6 +25,6 @@ export default class UserRepository {
         const user = await this.userRepo.findOne({ where: { username } })
         if (!user) throw new HttpException('User not found', HttpStatus.UNAUTHORIZED)
 
-        const isValidPassword = await
+        const isValidPassword = await this.cryptoService.comparePassword(password, user.password)
     }
 }
