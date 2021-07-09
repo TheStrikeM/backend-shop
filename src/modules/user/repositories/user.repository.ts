@@ -7,6 +7,7 @@ import {toUserDto} from "../dto/toUserDto";
 import DefaultUserDto from "../dto/DefaultUserDto";
 import LoginUserDto from "../dto/LoginUserDto";
 import CryptoService from "../../crypto/crypto.service";
+import RegistrationUserDto from "../dto/RegistrationUserDto";
 
 @Injectable()
 export default class UserRepository {
@@ -35,5 +36,18 @@ export default class UserRepository {
 
     async findByPayload({ username }: any): Promise<DefaultUserDto> {
         return await this.findOne({where:  { username } });
+    }
+
+    async create(userDto: RegistrationUserDto): Promise<DefaultUserDto> {
+        const { username, email, password } = userDto
+
+        const isExistUser = await this.userRepo.findOne({ where: { username } })
+        if (isExistUser) {
+            throw new HttpException('User already exists', HttpStatus.BAD_REQUEST)
+        }
+
+        const newUser: UserEntity = this.userRepo.create({ username, email, password })
+        await this.userRepo.save(newUser)
+        return toUserDto(newUser)
     }
 }
