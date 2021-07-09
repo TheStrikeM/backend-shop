@@ -25,4 +25,9 @@ export default class CryptoService {
         decryptedText += decipher.final('utf8');
         return decryptedText;
     }
+
+    comparePassword(password1: string, password2: string) {
+        if (this.decrypt(password1) === this.decrypt(password2)) return true
+        else return false
+    }
 }
