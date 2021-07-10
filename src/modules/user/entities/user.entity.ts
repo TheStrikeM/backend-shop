@@ -1,7 +1,7 @@
 import {BeforeInsert, Column, Entity, PrimaryGeneratedColumn} from "typeorm";
 import * as bcrypt from "bcrypt";
 
-@Entity()
+@Entity('UserEntity')
 export class UserEntity {
     @PrimaryGeneratedColumn('uuid') id: string;
 

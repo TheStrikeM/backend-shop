@@ -1,6 +1,7 @@
 import {Injectable} from "@nestjs/common";
 import {TypeOrmModuleOptions, TypeOrmOptionsFactory} from "@nestjs/typeorm";
 import {ConfigService} from "@nestjs/config";
+import {UserEntity} from "./modules/user/entities/user.entity";
 
 
 type DatabaseOptions = Promise<TypeOrmModuleOptions> | TypeOrmModuleOptions
@@ -19,7 +20,8 @@ export default class TypeOrmConfig implements TypeOrmOptionsFactory {
             port: parseInt(this.config('DATABASE_PORT')),
             username: this.config('DATABASE_USERNAME'),
             password: this.config('DATABASE_PASSWORD'),
-            database: this.config('DATABASE_NAME')
+            database: this.config('DATABASE_NAME'),
+            entities: [UserEntity]
         }
     }
 }

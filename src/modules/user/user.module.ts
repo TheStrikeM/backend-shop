@@ -7,6 +7,7 @@ import UserRepository from "./repositories/user.repository";
 @Module({
     imports: [
         TypeOrmModule.forFeature([UserEntity]),
+        TypeOrmModule.forRoot(),
         CryptoModule
     ],
     providers: [UserRepository],

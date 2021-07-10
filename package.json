@@ -34,6 +34,7 @@
     "crypto": "^1.0.1",
     "csurf": "^1.11.0",
     "helmet": "^4.6.0",
+    "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "pg": "^8.6.0",
     "reflect-metadata": "^0.1.13",
